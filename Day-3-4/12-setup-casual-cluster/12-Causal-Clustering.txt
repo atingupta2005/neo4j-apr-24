@@ -6,9 +6,8 @@ server.bolt.advertised_address=vm1:7687
 server.cluster.advertised_address=vm1:6000
 server.cluster.raft.advertised_address=vm1:7000
 server.discovery.advertised_address=vm1:5000
-
 dbms.cluster.discovery.endpoints=vm1:5000, vm2:5000, vm3:5000
-
+initial.dbms.default_primaries_count=2
 
 #Server 2: vm2
 server.http.advertised_address=vm2:7474
@@ -16,8 +15,8 @@ server.bolt.advertised_address=vm2:7687
 server.cluster.advertised_address= vm2:6000
 server.cluster.raft.advertised_address= vm2:7000
 server.discovery.advertised_address= vm2:5000
-
 dbms.cluster.discovery.endpoints=vm1:5000, vm2:5000, vm3:5000
+initial.dbms.default_primaries_count=2
 
 #Server 3: vm3
 server.http.advertised_address=vm3:7474
@@ -25,17 +24,13 @@ server.bolt.advertised_address=vm3:7687
 server.cluster.advertised_address=vm3:6000
 server.cluster.raft.advertised_address=vm3:7000
 server.discovery.advertised_address=vm3:5000
-
 dbms.cluster.discovery.endpoints=vm1:5000, vm2:5000, vm3:5000
-
-#On all Core Servers:
-dbms.cluster.discovery.endpoints=vm1:5000,vm2:5000,vm3:5000
-
+initial.dbms.default_primaries_count=2
 
 #Viewing status of the cluster
 cypher-shell -u neo4j -p secret
 
-CALL dbms.cluster.overview();
+SHOW SERVERS;
 
 
 #Seeding data for Cluster
@@ -95,14 +90,11 @@ sudo apt install jq
 <vm5>:7474/db/neo4j/cluster/writable
 
 #Understanding quorum
-CALL dbms.cluster.overview();
 
  # Stop the core server that is the LEADER.
  # View the cluster overview using another neo4j server:
-dbms.cluster.overview();
 
 #Backup using a read replica
-CALL dbms.listTransactions() YIELD transactionId;
 
 neo4j-admin backup --backup-dir=<backup-path> --name=<backup-name> --from=<core-server:backup-port> --protocol=catchup --check-consistency=true
 

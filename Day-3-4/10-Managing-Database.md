@@ -496,3 +496,40 @@ CREATE DATABASE neo4jcopy
 ```
 START DATABASE neo4j
 ```
+
+### Neo4J Database Management Commands
+```
+SHOW DATABASE neo4j;
+```
+
+```
+SHOW DATABASES
+```
+
+```
+SHOW DEFAULT DATABASE
+```
+
+```
+CREATE DATABASE sales;
+```
+
+```
+:use sales
+```
+
+```
+STOP DATABASE sales;
+```
+
+```
+SHOW DATABASES
+```
+
+```
+START DATABASE sales;
+```
+
+```
+DROP DATABASE sales;
+```
