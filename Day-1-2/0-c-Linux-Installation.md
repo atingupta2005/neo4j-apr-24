@@ -29,6 +29,9 @@ echo 'deb https://debian.neo4j.com stable latest' | sudo tee /etc/apt/sources.li
 sudo apt update
 ```
 
+```
+sudo apt install openjdk-17-jdk -y
+```
 
 **verify which Neo4j versions are available**
 ```
