@@ -61,6 +61,7 @@ export NEO4J_ACCEPT_LICENSE_AGREEMENT=eval
 
 ### Configure Neo4j to start automatically on system boot
 ```
+wget https://raw.githubusercontent.com/atingupta2005/neo4j-apr-24/main/Day-1-2/neo4j.service
 cp neo4j.service /lib/systemd/system/neo4j.service
 ```
 
