@@ -89,11 +89,8 @@ sudo systemctl stop neo4j
 
 ```
 cp /etc/neo4j/neo4j.conf /etc/neo4j/neo4j.conf-$(date +"%Y_%m_%d_%I_%M_%p_UTC").bkp
-cat /etc/neo4j/neo4j.conf | grep server.default_listen_address
 cat /etc/neo4j/neo4j.conf | grep "#dbms.security.auth_enabled"
-sudo sed -i 's/#server.default_listen_address=0.0.0.0/server.default_listen_address=0.0.0.0/g' /etc/neo4j/neo4j.conf
 sudo sed -i 's/#dbms.security.auth_enabled=true/dbms.security.auth_enabled=false/g' /etc/neo4j/neo4j.conf
-cat /etc/neo4j/neo4j.conf | grep server.default_listen_address
 cat /etc/neo4j/neo4j.conf | grep dbms.security.auth_enabled
 ```
 
@@ -115,72 +112,6 @@ neo4j@system> ALTER USER neo4j SET PASSWORD 'secret1234';
 ```
 
 **Exit**
-```
-neo4j@system> :exit
-```
-
-
-### **Recover an unassigned admin role**
-If you have no user assigned to the admin role, you can grant an admin role to an existing user (assuming your existing user is named neo4j):
-
-
-```
-cypher-shell -d system
-```
-
-```
-neo4j@system> GRANT ROLE admin TO neo4j;
-```
-
-```
-neo4j@system> :exit
-```
-
-
-### **Recover the admin role**
-If you have removed the admin role from your system entirely, you can recreate the role with its original capabilities
-
-#### Create a custom admin role using a client such as Cypher Shell, or the Neo4j Browser
-```
-cypher-shell -d system
-```
-
-```
-neo4j@system> CREATE ROLE myadmin;
-```
-
-```
-neo4j@system> GRANT ALL DBMS PRIVILEGES ON DBMS TO myadmin;
-```
-
-```
-neo4j@system> GRANT TRANSACTION MANAGEMENT ON DATABASE * TO myadmin;
-```
-
-```
-neo4j@system> GRANT START ON DATABASE * TO myadmin;
-```
-
-```
-neo4j@system> GRANT STOP ON DATABASE * TO myadmin;
-```
-
-```
-neo4j@system> GRANT MATCH {*} ON GRAPH * TO myadmin;
-```
-
-```
-neo4j@system> GRANT WRITE ON GRAPH * TO myadmin;
-```
-
-```
-neo4j@system> GRANT ALL ON DATABASE * TO myadmin;
-```
-
-```
-neo4j@system> GRANT ROLE myadmin TO neo4j;
-```
-
 ```
 neo4j@system> :exit
 ```
@@ -210,9 +141,6 @@ cypher-shell -d system
 
 ### Now open the browser and login.
 - http://IP-ADDRESS:7474/browser/
-
-- If It asks to change the password. Mention the password as secret12345
-
 
 
 

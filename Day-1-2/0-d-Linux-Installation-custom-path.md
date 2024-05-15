@@ -68,7 +68,9 @@ sudo /opt/neo4j/bin/neo4j-admin server status
 ```
 
 ### **Enable below Ports on Firewall/ Inbound Port Rules**
+```
 7687,5000,6000,7000,7688,2003,2004,3637,5005,7474
+```
 
 ### **Allow All IP Addresses to access Neo4J**
 ```
@@ -82,7 +84,7 @@ cat /opt/neo4j/conf/neo4j.conf | grep server.default_listen_address
 sudo /opt/neo4j/bin/neo4j-admin server stop
 sudo /opt/neo4j/bin/neo4j-admin server start
 sudo /opt/neo4j/bin/neo4j-admin server status
-``
+```
 
 
 **Login Details:**
