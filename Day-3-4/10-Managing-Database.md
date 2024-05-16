@@ -151,14 +151,7 @@ ls -la /var/lib/neo4j/data/databases
 ```
 
 ```
-STOP Database neo4j2
-```
-
-
-#### Remove the folder for the active database
-```
-sudo rm -rf /var/lib/neo4j/data/databases/neo4j
-ls -la /var/lib/neo4j/data/databases/
+STOP Database neo4j
 ```
 
 #### Also need to remove database from Cypher
