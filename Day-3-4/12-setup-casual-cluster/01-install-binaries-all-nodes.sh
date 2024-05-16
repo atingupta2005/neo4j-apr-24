@@ -24,7 +24,6 @@ echo "* soft nofile 65536" | sudo tee -a /etc/security/limits.conf
 echo "* hard nofile 65536" | sudo tee -a /etc/security/limits.conf
 
 cat /etc/security/limits.conf
-sudo nano /etc/security/limits.conf
 
 sudo reboot
 
