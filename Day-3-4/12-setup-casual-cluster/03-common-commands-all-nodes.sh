@@ -9,5 +9,7 @@ ip addr
 sudo bash -c 'echo "10.0.0.4 vm1" >> /etc/hosts'
 sudo bash -c 'echo "10.0.0.5 vm2" >> /etc/hosts'
 sudo bash -c 'echo "10.0.0.6 vm3" >> /etc/hosts'
+sudo bash -c 'echo "10.0.0.7 vm4" >> /etc/hosts'
+sudo bash -c 'echo "10.0.0.8 vm5" >> /etc/hosts'
 
 cat /etc/hosts

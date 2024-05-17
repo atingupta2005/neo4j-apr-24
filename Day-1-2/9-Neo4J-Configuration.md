@@ -90,7 +90,7 @@ sudo systemctl stop neo4j
 ```
 cp /etc/neo4j/neo4j.conf /etc/neo4j/neo4j.conf-$(date +"%Y_%m_%d_%I_%M_%p_UTC").bkp
 cat /etc/neo4j/neo4j.conf | grep "#dbms.security.auth_enabled"
-sudo sed -i 's/#dbms.security.auth_enabled=true/dbms.security.auth_enabled=false/g' /etc/neo4j/neo4j.conf
+sudo sed -i 's/#dbms.security.auth_enabled=false/dbms.security.auth_enabled=false/g' /etc/neo4j/neo4j.conf
 cat /etc/neo4j/neo4j.conf | grep dbms.security.auth_enabled
 ```
 
@@ -135,7 +135,7 @@ sudo systemctl start neo4j
 ```
 
 ```
-cypher-shell -d system
+cypher-shell -u neo4j -p secret1234 -d system
 ```
 
 

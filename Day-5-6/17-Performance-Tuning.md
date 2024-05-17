@@ -5,55 +5,20 @@
 - Always use explicit configuration
 	- Recommended to always define the page cache and heap size parameters explicitly 
 - Initial memory recommendation
-	- Use neo4j-admin memrec command to get an initial recommendation
+	- Use neo4j-admin server  memory-recommendation command to get an initial recommendation
 - Inspect the memory settings of all databases
-	- neo4j-admin memrec command is useful for inspecting
+	- neo4j-admin server  memory-recommendation is useful for inspecting
 
 ## Capacity planning
 - It is advantageous to try to cache as much of the data and indexes as possible
 ```
-dbms.memory.pagecache.size = 1.2 * (35GB) =  42GB
+server.memory.pagecache.size = 1.2 * (35GB) =  42GB
 ```
-
-## Limit transaction memory usage
-- Global maximum memory usage for all of the transactions
-- Must be configured low enough so that you do not run out of memory
-```
-dbms.memory.transaction.global_max_size=256m
-```
-
-- Limits the transaction memory usage per database.
-```
-dbms.memory.transaction.database_max_size=100m
-```
-
-- Constrains each transaction
-```
-dbms.memory.transaction.max_size=10m
-```
-
-- When any of the limits are reached, the transaction is terminated without affecting the overall health of the database.
-
-## Limit transaction memory usage
-- To help configure these settings you can use the following commands to list the current usage:
-
-```
-CALL dbms.listPools()
-```
-
-```
-CALL dbms.listTransactions()
-```
-
-```
-CALL dbms.listQueries()
-```
-
 
 ## Neo4j Performance Tuning - Index Configuration
-- Two different index types
-	- b-tree and 
-	- full-text
+- Search-performance indexes, for speeding up data retrieval based on exact matches. This category includes range, text, point, and token lookup indexes.
+
+- Semantic indexes, for approximate matches and to compute similarity scores between a query string and the matching data. This category includes full-text and vector indexes.
 
 ## Procedures to create index
 ### Create some sample data
@@ -62,11 +27,11 @@ CALL dbms.listQueries()
 ```
 
 ```
-CALL db.indexes()
+SHOW INDEXES
 ```
 
 ```
-CALL db.createIndex("MyIndex", ["Person"], ["name"], "native-btree-1.0")
+Create Index("MyIndex", ["Person"], ["name"], "native-btree-1.0")
 ```
 
 

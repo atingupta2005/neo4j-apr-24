@@ -14,7 +14,7 @@ image="Canonical:0001-com-ubuntu-server-focal:20_04-lts:latest"
 
 # Define the number of VMs to create
 
-num_vms=3
+num_vms=5
 
 for current_subscription in ${all_subscriptions[@]}
 do

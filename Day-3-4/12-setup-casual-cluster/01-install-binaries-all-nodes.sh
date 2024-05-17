@@ -1,7 +1,6 @@
 # Install Binaries on all VMS
 #- Note: Below commands need to run on all the VMs
 
-sudo add-apt-repository universe
 sudo apt-get update
 sudo apt-get -y install wget ca-certificates zip net-tools vim nano tar netcat tree
 
@@ -25,9 +24,6 @@ echo "* hard nofile 65536" | sudo tee -a /etc/security/limits.conf
 
 cat /etc/security/limits.conf
 
-sudo reboot
-
-ulimit -n
 
 sudo usermod -aG sudo neo4j
 
@@ -35,7 +31,9 @@ sudo usermod -aG sudo neo4j
 ### Set password - neo4j
 sudo passwd neo4j
 
-logout
+sudo reboot
+
+ulimit -n
 
 # Login again using the user - neo4j
 
