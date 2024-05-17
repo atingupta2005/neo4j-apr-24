@@ -4,7 +4,7 @@ readarray -d "," -t all_subscriptions <<< "$subscriptions"
 
 az account show
 locations="centralus,northeurope,japaneast"
-locations="centralus"
+locations="northeurope"
 
 readarray -d "," -t all_locations <<< "$locations"
 
@@ -15,7 +15,7 @@ image="Canonical:0001-com-ubuntu-server-focal:20_04-lts:latest"
 
 # Define the number of VMs to create
 
-num_vms=3
+num_vms=5
 
 for current_subscription in ${all_subscriptions[@]}
 do
