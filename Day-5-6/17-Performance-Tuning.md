@@ -31,12 +31,28 @@ SHOW INDEXES
 ```
 
 ```
-Create Index("MyIndex", ["Person"], ["name"], "native-btree-1.0")
+CREATE INDEX MyIndex FOR (n:Person) ON (n.name)
 ```
 
 
 ```
-CALL db.indexes()
+SHOW INDEXES
+```
+
+
+```
+DROP INDEX MyIndex
+```
+
+```
+SHOW INDEXES
+YIELD name, type, indexProvider AS provider, options, createStatement
+RETURN name, type, provider, options.indexConfig AS config, createStatement
+```
+
+```
+CREATE CONSTRAINT book_isbn
+FOR (book:Book) REQUIRE book.isbn IS UNIQUE
 ```
 
 
@@ -45,30 +61,18 @@ DROP INDEX MyIndex
 ```
 
 
-```
-CALL db.createUniquePropertyConstraint("MyIndex", ["Person"], ["name"], "native-btree-1.0")
-```
-
 
 ```
-DROP INDEX MyIndex
-```
-
-
-```
-CALL db.createNodeKey("MyIndex", ["Person"], ["name"], "native-btree-1.0")
-```
-
-
-```
-CALL db.indexes()
+SHOW INDEXES
+YIELD name, type, indexProvider AS provider, options, createStatement
+RETURN name, type, provider, options.indexConfig AS config, createStatement
 ```
 
 
 # Neo4j Performance Tuning - Tuning of garbage collector
 ## Introduction
 - The effect of the Java Virtual Machine’s garbage collector with regards to Neo4j performance.
-- Memory leaks can happen, more often than not, a higher memory consumption is normal behaviour by the JVM
+- Memory leaks can happen, a higher memory consumption is normal behaviour by the JVM
 
 ## Neo4j’s memory
 ### Heap
@@ -84,20 +88,6 @@ Heap storage for objects is reclaimed by garbage collector (GC)
 - Used to cache the Neo4j data
 - Avoid costly disk access and result in optimal performance
 
-### Neo4j’s memory
-- We can divide the Neo4j’s memory consumption into 2 main areas
-	- On-heap
-	- Off-heap
-
-- On-heap
-	- The runtime data lives
-	- Query execution, graph management and transaction state exist
-- Off-heap (3 categories)
-	- Neo4j’s page cache
-		- For caching the graph data into memory
-	- Other memory the JVM needs to work (JVM Internals)
-	- Direct memory
-
 ## Memory settings
 ```
 vim /var/lib/neo4j/conf/neo4j.conf
@@ -105,20 +95,18 @@ vim /var/lib/neo4j/conf/neo4j.conf
 
 ### Initial heap size
 ```
-dbms.memory.heap.initial_size=512m
+server.memory.heap.initial_size=512m
 ```
 
 ### Maximum heap size
 ```
-dbms.memory.heap.max_size=512m
+server.memory.heap.max_size=512m
 ```
-
-- It is recommended to set the initial heap size and the maximum heap size to the same value
 
 # Neo4j Performance Tuning - Bolt thread pool configuration
 ## Introduction
 - The Bolt connector is backed by a thread pool on the server side
-- The thread pool is constructed as part of the server startup process.
+- The thread pool is constructed as part of the server start-up process.
 
 
 ## How thread pooling works
@@ -131,18 +119,18 @@ dbms.memory.heap.max_size=512m
 ## Configuration options
 - The minimum number of threads that will always be up even if they are idle.
 ```
-dbms.connector.bolt.thread_pool_min_size=5
+server.bolt.thread_pool_min_size=5
 ```
 
 - The maximum number of threads that will be created by the thread pool.
 ```
-dbms.connector.bolt.thread_pool_max_size=400
+server.bolt.thread_pool_max_size=400
 ```
 
 - The duration that the thread pool will wait before killing an idle thread from the pool. 
 - However, the number of threads will never go below 
 ```
-dbms.connector.bolt.thread_pool_keep_alive=5m
+server.bolt.thread_pool_keep_alive=5m
 ```
 
 # Neo4j Performance Tuning - Linux file system tuning
@@ -153,9 +141,6 @@ dbms.connector.bolt.thread_pool_keep_alive=5m
 	- Few sequential writes when committing changes
 - Recommended to store database and transaction logs on separate devices
 - The EXT4 and XFS file systems are recommended as a first choice.
-
-- Recommended practice is to disable file and directory access time updates
-- This way, the file system won’t have to issue writes that update this meta-data, thus improving write performance
 
 ## Storage and RAM
 - High read and write I/O load degraded SSD performance.
@@ -187,27 +172,27 @@ dbms.connector.bolt.thread_pool_keep_alive=5m
 - Controls whether indexes will automatically be re-sampled
 - The Cypher query planner depends on accurate statistics to create efficient plans, so it is important it is kept up to date
 ```
-dbms.index_sampling.background_enabled=true
+db.index_sampling.background_enabled=true
 ```
 
 - Controls the percentage of the index that has to have been updated before a new sampling run is triggered
 ```
-dbms.index_sampling.update_percentage=5
+db.index_sampling.update_percentage=5
 ```
 
 ```
-neo4j restart && neo4j status && tail -f -n 50 /logs/debug.log && curl localhost:7474
+neo4j restart && neo4j status && tail -f -n 50 /var/log/neo4j/debug.log && curl localhost:7474
 ```
 
 - It is possible to manually trigger index sampling, using the following built-in procedures:
 #### Trigger resampling of an index
 ```
-CALL db.resampleIndex("MyIndex");
+CALL db.resampleIndex("MyIndex")
 ```
 
 #### Trigger resampling of all outdated indexes
 ```
-CALL db.resampleOutdatedIndexes();
+CALL db.resampleOutdatedIndexes()
 ```
 
 ## Execution plans
@@ -217,11 +202,11 @@ vim /var/lib/neo4j/conf/neo4j.conf
 ```
 
 ```
-cypher.statistics_divergence_threshold=0.75
+dbms.cypher.statistics_divergence_threshold=0.75
 ```
 
 ```
-cypher.min_replan_interval=10s
+dbms.cypher.min_replan_interval=10s
 ```
 
 ```
@@ -236,11 +221,11 @@ curl localhost:7474
 ## Manually force
 ### Clears out all query caches, but does not change the database statistics.
 ```
-CALL db.clearQueryCaches();
+CALL db.clearQueryCaches()
 ```
 
 
 ### Completely recalculates all database statistics
 ```
-CALL db.prepareForReplanning();
+CALL db.prepareForReplanning()
 ```

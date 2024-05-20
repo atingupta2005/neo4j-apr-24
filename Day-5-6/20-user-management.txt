@@ -1,0 +1,81 @@
+# User Management
+-----------------------
+
+:Use system
+
+Create database anotherDb
+Create database anotherDbOrAlias
+
+SHOW CURRENT USER
+	
+SHOW USERS
+
+SHOW USER PRIVILEGES
+
+CREATE USER jake
+SET PASSWORD 'abcd1234' CHANGE REQUIRED
+SET STATUS SUSPENDED
+SET HOME DATABASE anotherDb
+
+RENAME USER jake TO bob
+
+ALTER USER bob
+SET PASSWORD 'abcd5678' CHANGE NOT REQUIRED
+SET STATUS ACTIVE
+
+ALTER USER bob
+SET HOME DATABASE anotherDbOrAlias
+
+ALTER USER bob
+REMOVE HOME DATABASE
+
+SHOW ROLES
+
+PUBLIC - a role that all users have granted. By default it gives access to the home database and to execute privileges for procedures and functions.
+
+reader - can perform traverse and read operations in all databases except system.
+
+editor - can perform traverse, read, and write operations in all databases except system, but cannot create new labels or relationship types.
+
+publisher - can do the same as editor, but also create new labels and relationship types.
+
+architect - can do the same as publisher as well as create and manage indexes and constraints.
+
+admin - can do the same as all the above, as well as manage databases, aliases, users, roles, and privileges.
+
+CREATE OR REPLACE ROLE myrole
+
+SHOW POPULATED ROLES WITH USERS
+
+CREATE ROLE mysecondrole AS COPY OF myrole
+
+SHOW ROLES
+
+GRANT ROLE myrole TO bob
+
+REVOKE ROLE myrole FROM bob
+
+CREATE OR REPLACE ROLE mythirdrole
+
+DROP ROLE mythirdrole
+
+SHOW PRIVILEGES
+
+SHOW PRIVILEGES AS COMMANDS
+
+CREATE OR REPLACE ROLE regularUsers
+
+# To grant the role regularUsers the permissions on the graph neo4j, use:
+GRANT ALL GRAPH PRIVILEGES ON GRAPH neo4j TO regularUsers
+
+SHOW ROLE regularUsers PRIVILEGES
+
+GRANT ROLE regularUsers TO bob
+
+SHOW POPULATED ROLES WITH USERS
+
+SHOW USERS
+
+SHOW PRIVILEGES YIELD * RETURN role, access, collect([graph, resource, segment, action]) AS privileges
+
+SHOW USER bob PRIVILEGES

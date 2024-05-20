@@ -1,0 +1,22 @@
+# Integrate Grafana with Neo4J
+
+http://vm-neo4j-ububtu.eastus.cloudapp.azure.com:3000/?orgId=1
+
+https://graphaware.com/neo4j/2019/06/11/monitoring-neo4j-prometheus.html
+
+https://grafana.com/docs/grafana/latest/setup-grafana/installation/
+
+http://vm-neo4j-ububtu.eastus.cloudapp.azure.com:9090/
+http://vm-neo4j-ububtu.eastus.cloudapp.azure.com:3000
+
+
+server.metrics.enabled=true
+server.metrics.graphite.enabled=true
+server.metrics.graphite.server=localhost:2003
+server.metrics.graphite.interval=30s
+server.metrics.prefix=neo4j
+server.metrics.prometheus.enabled=true
+server.metrics.prometheus.endpoint=localhost:2004
+server.metrics.jmx.enabled=true
+
+

@@ -4,7 +4,7 @@ readarray -d "," -t all_subscriptions <<< "$subscriptions"
 
 az account show
 locations="centralus,northeurope,japaneast"
-locations="northeurope"
+locations="japaneast"
 
 readarray -d "," -t all_locations <<< "$locations"
 
