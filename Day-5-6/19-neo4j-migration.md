@@ -94,7 +94,6 @@ sudo mkdir /etc/smbcredentials
 fi
 if [ ! -f "/etc/smbcredentials/savmneo4j6121980.cred" ]; then
     sudo bash -c 'echo "username=savmneo4j6121980" >> /etc/smbcredentials/savmneo4j6121980.cred'
-    sudo bash -c 'echo "password=" >> /etc/smbcredentials/savmneo4j6121980.cred'
 fi
 sudo chmod 600 /etc/smbcredentials/savmneo4j6121980.cred
 
