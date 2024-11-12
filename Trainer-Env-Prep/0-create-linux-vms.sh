@@ -1,21 +1,20 @@
-subscriptions="subs-neo4j"
+subscriptions="s-w9"
 
 readarray -d "," -t all_subscriptions <<< "$subscriptions"
 
 az account show
 locations="centralus,northeurope,japaneast"
-locations="japaneast"
 
 readarray -d "," -t all_locations <<< "$locations"
 
 username="tuser"
 password="Neo4j@123456" # Replace with your desired password
-vm_size="Standard_B2ms"
+vm_size="Standard_B4ms"
 image="Canonical:0001-com-ubuntu-server-focal:20_04-lts:latest"
 
 # Define the number of VMs to create
 
-num_vms=5
+num_vms=2
 
 for current_subscription in ${all_subscriptions[@]}
 do

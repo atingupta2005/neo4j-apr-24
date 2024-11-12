@@ -1,0 +1,5 @@
+bolt+routing was the original protocal and it only worked in a clustered environment. Do you currently have a cluster? If you used 'bolt+routing' on a single instance it would fail, and with some error related to could not get routing address of some such.
+
+neo4j was then created to replace / enhance such that this single protocal would work whether in a single Neo4j installation or a Neo4j clustered installation.
+In this case neo4j is effectively the one size fits all, for example if you develop in a environment of a single server use neo4j and if you then need to migrate your code to a clustered environment nothing needs to change.
+Whereas previously if you developed in a single environment one would use bolt for it was the only protocal to work for single instances and then when you moved to a clustered environment you would need to change all your bolt references to bolt+routing
